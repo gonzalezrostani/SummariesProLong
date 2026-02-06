@@ -71,6 +71,11 @@ if "source_text" not in st.session_state:
 if "start_timestamp" not in st.session_state:
     st.session_state.start_timestamp = None
 
+# Qualtrics example: https://summariespro.streamlit.app/?pid=${e://Field/workerId}
+qp = st.query_params
+if "participant_id" not in st.session_state:
+    st.session_state.participant_id = qp.get("rid", "")  # or "rid" if you used rid
+
 # Generation parameters
 temperature = 0.4
 max_tokens = 50
@@ -168,6 +173,7 @@ def save_full_conversation():
         "start_timestamp": st.session_state.start_timestamp,
         "end_timestamp": int(time.time()),
         "conversation_id": st.session_state.conv_id,
+        "participant_id": st.session_state.get("participant_id", ""),
         "user_r1": user_turns[0] if len(user_turns) > 0 else "",
         "system_r1": sys_turns[0] if len(sys_turns) > 0 else "",
         "user_r2": user_turns[1] if len(user_turns) > 1 else "",
@@ -180,6 +186,7 @@ def save_full_conversation():
         row["start_timestamp"],
         row["end_timestamp"],
         row["conversation_id"],
+        row["participant_id"],
         row["user_r1"],
         row["system_r1"],
         row["user_r2"],
@@ -202,7 +209,7 @@ def save_full_conversation():
 
             if row_idx:
                 # Update row A..I for this index
-                MASTER_SHEET.update(f"A{row_idx}:I{row_idx}", [row_values])
+                MASTER_SHEET.update(f"A{row_idx}:J{row_idx}", [row_values])
             else:
                 MASTER_SHEET.append_row(row_values)
         except Exception:
