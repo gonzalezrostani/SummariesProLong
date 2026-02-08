@@ -77,8 +77,8 @@ if "participant_id" not in st.session_state:
     st.session_state.participant_id = qp.get("rid", "")  # or "rid" if you used rid
 
 # Generation parameters
-temperature = 0.4
-max_tokens = 50
+temperature = 0.5
+max_tokens = 200
 
 # ---- System instructions ----
 SYSTEM_INSTRUCTIONS = '''
