@@ -78,7 +78,7 @@ if "participant_id" not in st.session_state:
 
 # Generation parameters
 temperature = 0.8
-max_tokens = 500
+max_tokens = 1000
 
 # ---- System instructions ----
 SYSTEM_INSTRUCTIONS = '''
@@ -105,6 +105,8 @@ Round 3 → finalize summary (NO question at end).
 GENERAL
 - Keep the output labels exactly as written.
 - Always take SOURCE_TEXT as inspiration, but you do NOT need to summarize it well.
+
+Keep the answer at about 350-400 tokens.
 '''
 
 MODEL = "gpt-4o-mini"
