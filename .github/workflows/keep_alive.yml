@@ -1,0 +1,17 @@
+name: Keep Alive - Summaries Pro
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Every 60 minutes
+  workflow_dispatch:       # Allow manual trigger
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Summaries Pro Streamlit App
+        run: |
+          echo "Pinging https://summaries-pro.streamlit.app/ to keep it alive..."
+          curl -s -o /dev/null -w "HTTP Status: %{http_code}" https://summaries-pro.streamlit.app/
+          echo ""
+          echo "Ping complete at $(date)"
